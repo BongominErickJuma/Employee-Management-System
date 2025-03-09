@@ -1,13 +1,13 @@
 import { apiUrl } from "./constants.js";
 import renderEmployeeTable from "./index.js";
+import fetchEmployees from "./fetchEmployees.js";
 
 // Function to handle "Edit" button click
 async function handleEditButtonClick(id) {
-  const employees = await fetchEmployees();
-  const employee = employees.find((e) => e.id === parseInt(id));
+  const employeesData = await fetchEmployees();
+  const employee = employeesData.employees.find((e) => e.id === parseInt(id));
 
   if (employee) {
-    console.log("Employee data:", employee);
     populateEditModal(employee);
   } else {
     console.error("Employee not found");

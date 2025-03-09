@@ -31,7 +31,7 @@ Before running the project, ensure you have the following installed:
 Clone the project repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/employee-management-system.git
+git clone https://github.com/BongominErickJuma/Employee-Management-System
 cd employee-management-system
 ```
 
