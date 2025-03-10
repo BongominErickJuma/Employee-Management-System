@@ -2,13 +2,13 @@
 header("Content-Type: application/json");
 include('db.php');
 
-
 try {
     // Fetch all employees with pagination and search
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Default to page 1
-        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5; // Default to 5 records per page
-        $searchQuery = isset($_GET['search']) ? $_GET['search'] : ''; // Search query
+        // Sanitize and validate GET parameters
+        $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1; // Ensure page is at least 1
+        $limit = isset($_GET['limit']) ? max(1, (int)$_GET['limit']) : 5; // Ensure limit is at least 1
+        $searchQuery = isset($_GET['search']) ? htmlspecialchars($_GET['search'], ENT_QUOTES, 'UTF-8') : ''; // Sanitize search query
 
         $offset = ($page - 1) * $limit; // Calculate the offset
 
@@ -54,13 +54,14 @@ try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data = json_decode(file_get_contents('php://input'), true);
 
-        // Validate input data
+        // Validate and sanitize input data
         if (empty($data['name']) || empty($data['email']) || empty($data['position']) || empty($data['salary']) || empty($data['dateJoined'])) {
             http_response_code(400); // Bad Request
             echo json_encode(['error' => 'All fields are required.']);
             exit;
         }
 
+        $data['email'] = filter_var($data['email'], FILTER_SANITIZE_EMAIL);
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             http_response_code(400); // Bad Request
             echo json_encode(['error' => 'Invalid email format.']);
@@ -73,8 +74,8 @@ try {
             exit;
         }
 
-        // Check for duplicate email
-        $stmt = $conn->prepare("SELECT id FROM employees WHERE email = :email");
+        // Check for duplicate email (case-insensitive)
+        $stmt = $conn->prepare("SELECT id FROM employees WHERE LOWER(email) = LOWER(:email)");
         $stmt->execute([':email' => $data['email']]);
         if ($stmt->fetch()) {
             http_response_code(400); // Bad Request
@@ -90,27 +91,27 @@ try {
                 (:name, :email, :position, :salary, :dateJoined)"
         );
         $stmt->execute([
-            ':name' => $data['name'],
+            ':name' => htmlspecialchars($data['name'], ENT_QUOTES, 'UTF-8'),
             ':email' => $data['email'],
-            ':position' => $data['position'],
-            ':salary' => $data['salary'],
-            ':dateJoined' => $data['dateJoined']
+            ':position' => htmlspecialchars($data['position'], ENT_QUOTES, 'UTF-8'),
+            ':salary' => (float)$data['salary'],
+            ':dateJoined' => htmlspecialchars($data['dateJoined'], ENT_QUOTES, 'UTF-8')
         ]);
 
         echo json_encode(['message' => 'Employee added successfully']);
     }
-    // Update an employee
 
     if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
         $data = json_decode(file_get_contents('php://input'), true);
 
-        // Validate input data
+        // Validate and sanitize input data
         if (empty($data['name']) || empty($data['email']) || empty($data['position']) || empty($data['salary']) || empty($data['dateJoined'])) {
             http_response_code(400); // Bad Request
             echo json_encode(['error' => 'All fields are required.']);
             exit;
         }
 
+        $data['email'] = filter_var($data['email'], FILTER_SANITIZE_EMAIL);
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             http_response_code(400); // Bad Request
             echo json_encode(['error' => 'Invalid email format.']);
@@ -123,8 +124,8 @@ try {
             exit;
         }
 
-        // Check for duplicate email (excluding the current employee)
-        $stmt = $conn->prepare("SELECT id FROM employees WHERE email = :email AND id != :id");
+        // Check for duplicate email (excluding the current employee, case-insensitive)
+        $stmt = $conn->prepare("SELECT id FROM employees WHERE LOWER(email) = LOWER(:email) AND id != :id");
         $stmt->execute([':email' => $data['email'], ':id' => $data['id']]);
         if ($stmt->fetch()) {
             http_response_code(400); // Bad Request
@@ -143,19 +144,19 @@ try {
             WHERE id = :id"
         );
         $stmt->execute([
-            ':id' => $data['id'],
-            ':name' => $data['name'],
+            ':id' => (int)$data['id'],
+            ':name' => htmlspecialchars($data['name'], ENT_QUOTES, 'UTF-8'),
             ':email' => $data['email'],
-            ':position' => $data['position'],
-            ':salary' => $data['salary'],
-            ':dateJoined' => $data['dateJoined']
+            ':position' => htmlspecialchars($data['position'], ENT_QUOTES, 'UTF-8'),
+            ':salary' => (float)$data['salary'],
+            ':dateJoined' => htmlspecialchars($data['dateJoined'], ENT_QUOTES, 'UTF-8')
         ]);
 
         echo json_encode(['message' => 'Employee updated successfully']);
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-        $id = $_GET['id'];
+        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0; // Sanitize and validate ID
 
         // Check if employee exists
         $stmt = $conn->prepare("SELECT id FROM employees WHERE id = :id");
@@ -172,17 +173,14 @@ try {
 
         echo json_encode(['message' => 'Employee deleted successfully']);
     }
-
-
-    // Handle other CRUD operations (POST, PUT, DELETE) here...
 } catch (PDOException $e) {
     // Handle database errors
     http_response_code(500); // Internal Server Error
-    echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
+    echo json_encode(['error' => 'Database error.']);
     exit;
 } catch (Exception $e) {
     // Handle other errors
     http_response_code(500); // Internal Server Error
-    echo json_encode(['error' => 'An error occurred: ' . $e->getMessage()]);
+    echo json_encode(['error' => 'An error occurred.']);
     exit;
 }

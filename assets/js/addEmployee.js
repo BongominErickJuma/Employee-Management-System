@@ -1,6 +1,7 @@
 import { apiUrl } from "./constants.js";
 import renderEmployeeTable from "./index.js";
 import { validateForm } from "./functions.js";
+import showAlert from "./showAlert.js";
 // Function to add a new employee
 async function addEmployee(event) {
   event.preventDefault(); // Prevent form submission
@@ -35,20 +36,17 @@ async function addEmployee(event) {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to add employee");
+      if (response.status === 400) {
+        throw new Error("Email Already Taken");
+      } else {
+        throw new Error("Failed to add employee");
+      }
     }
 
     // Refresh the table to show the new employee
     await renderEmployeeTable();
-
-    // Show success message
-    const successMessage = document.getElementById("successMessage");
-    successMessage.style.display = "block";
-
-    // Hide success message after 3 seconds
-    setTimeout(() => {
-      successMessage.style.display = "none";
-    }, 3000);
+    // Show success toast
+    showAlert("Employee added successfully!", "success");
 
     // Close the modal
     const modal = bootstrap.Modal.getInstance(
@@ -60,6 +58,7 @@ async function addEmployee(event) {
     document.getElementById("addEmployeeForm").reset();
   } catch (error) {
     console.error("Error adding employee:", error);
+    showAlert(error.message, "danger");
   }
 }
 

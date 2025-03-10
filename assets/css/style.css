@@ -117,6 +117,12 @@ h1 {
   height: 3rem;
 }
 
+@media (max-width: 925px) {
+  .edit-btn {
+    margin-bottom: 0.5em;
+  }
+}
+
 /* Responsive adjustments */
 @media (max-width: 576px) {
   .btn {

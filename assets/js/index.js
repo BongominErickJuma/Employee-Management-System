@@ -1,11 +1,7 @@
-import editEmployee from "./updateEmployees.js";
-import deleteEmployee from "./deleteEmployees.js";
+import handleEditButtonClick from "./updateEmployees.js";
+import { openDeleteConfirmationModal } from "./deleteEmployees.js";
+import renderPaginationControls from "./pagination.js";
 import { apiUrl } from "./constants.js";
-
-// Attach functions to the window object to make them globally accessible
-window.deleteEmployee = deleteEmployee;
-window.editEmployee = editEmployee;
-
 // Function to render the employee table with search functionality
 async function renderEmployeeTable(page = 1, limit = 5, searchQuery = "") {
   const loadingSpinner = document.getElementById("loadingSpinner");
@@ -54,8 +50,8 @@ async function renderEmployeeTable(page = 1, limit = 5, searchQuery = "") {
           <td>${employee.salary}</td>
           <td>${employee.date_joined}</td>
           <td class="text-end border">
-            <button class="btn btn-sm btn-warning edit-btn" data-id="${employee.id}"><i class="bi bi-pencil-square"></i></button>
-            <button class="btn btn-sm btn-danger" onclick="deleteEmployee(${employee.id})"><i class="bi bi-trash"></i>
+            <button class="btn btn-sm btn-warning edit-btn" data-edit-id="${employee.id}"><i class="bi bi-pencil-square"></i></button>
+            <button class="btn btn-sm btn-danger delete-btn" data-id="${employee.id}"><i class="bi bi-trash"></i>
 </button>
           </td>
         </tr>
@@ -70,58 +66,31 @@ async function renderEmployeeTable(page = 1, limit = 5, searchQuery = "") {
     const editButtons = document.querySelectorAll(".edit-btn");
     editButtons.forEach((button) => {
       button.addEventListener("click", () => {
+        const id = button.dataset.editId;
+        handleEditButtonClick(id);
+      });
+    });
+
+    // Add event listeners to delete buttons
+    const deleteButtons = document.querySelectorAll(".delete-btn");
+    deleteButtons.forEach((button) => {
+      button.addEventListener("click", () => {
         const id = button.dataset.id;
-        editEmployee(id);
+        openDeleteConfirmationModal(id);
       });
     });
   } catch (error) {
     console.error("Error fetching employees:", error);
-    alert(error.message); // Display error message to the user
   } finally {
     // Hide loading spinner and fade in the table
     loadingSpinner.style.display = "none";
     tableBody.removeAttribute("hidden"); // Fade in the table
   }
 }
-
-// Function to render pagination controls with search functionality
-function renderPaginationControls(total, currentPage, limit, searchQuery = "") {
-  const totalPages = Math.ceil(total / limit);
-
-  // Update the current page and total pages
-  document.getElementById("currentPage").textContent = currentPage;
-  document.getElementById("totalPages").textContent = totalPages;
-
-  // Previous Button
-  const prevButton = document.getElementById("prevButton");
-  if (currentPage > 1) {
-    prevButton.parentElement.classList.remove("disabled");
-    prevButton.onclick = () => {
-      renderEmployeeTable(currentPage - 1, limit, searchQuery);
-    };
-  } else {
-    prevButton.parentElement.classList.add("disabled");
-    prevButton.onclick = null;
-  }
-
-  // Next Button
-  const nextButton = document.getElementById("nextButton");
-  if (currentPage < totalPages) {
-    nextButton.parentElement.classList.remove("disabled");
-    nextButton.onclick = () => {
-      renderEmployeeTable(currentPage + 1, limit, searchQuery);
-    };
-  } else {
-    nextButton.parentElement.classList.add("disabled");
-    nextButton.onclick = null;
-  }
-}
-
 // Function to handle search
 async function handleSearch() {
   const searchQuery = document.getElementById("searchInput").value.trim();
   if (!searchQuery) {
-    alert("Please enter a search term.");
     return;
   }
 

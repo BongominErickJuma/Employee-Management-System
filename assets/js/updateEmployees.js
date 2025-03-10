@@ -1,12 +1,13 @@
 import { apiUrl } from "./constants.js";
 import renderEmployeeTable from "./index.js";
-import fetchEmployees from "./fetchEmployees.js";
+import fetchAllEmployees from "./fetchEmployees.js";
+import showAlert from "./showAlert.js";
 
 // Function to handle "Edit" button click
 async function handleEditButtonClick(id) {
-  const employeesData = await fetchEmployees();
-  const employee = employeesData.employees.find((e) => e.id === parseInt(id));
+  const employeesData = await fetchAllEmployees();
 
+  const employee = employeesData.find((e) => e.id === parseInt(id));
   if (employee) {
     populateEditModal(employee);
   } else {
@@ -66,6 +67,8 @@ async function handleEditFormSubmit(event) {
 
     // Refresh the table to show the updated data
     await renderEmployeeTable();
+    // Show success toast
+    showAlert("Employee updated successfully!", "success");
 
     // Close the modal
     const editModal = bootstrap.Modal.getInstance(
@@ -73,20 +76,11 @@ async function handleEditFormSubmit(event) {
     );
     editModal.hide();
 
-    // Show success message
-    const editSuccessMessage = document.getElementById("editSuccessMessage");
-    editSuccessMessage.style.display = "block";
-
-    // Hide success message after 3 seconds
-    setTimeout(() => {
-      editSuccessMessage.style.display = "none";
-    }, 3000);
-
     // Reset the form
     document.getElementById("editEmployeeForm").reset();
   } catch (error) {
     console.error("Error updating employee:", error);
-    alert(error.message); // Display error message to the user
+    showAlert(error.message, "danger");
   }
 }
 

@@ -1,5 +1,6 @@
 import { apiUrl } from "./constants.js";
 import renderEmployeeTable from "./index.js";
+import showAlert from "./showAlert.js";
 
 // Function to delete an employee
 async function deleteEmployee(id) {
@@ -17,12 +18,44 @@ async function deleteEmployee(id) {
     // Refresh the table to reflect the deletion
     await renderEmployeeTable();
 
-    // Show success message (optional)
-    alert("Employee deleted successfully!");
+    // Show success toast
+    showAlert("Employee deleted successfully!", "success");
   } catch (error) {
     console.error("Error deleting employee:", error);
-    alert(error.message); // Display error message to the user
+    showAlert(error.message, "danger");
   }
 }
 
-export default deleteEmployee;
+// Function to open the delete confirmation modal
+function openDeleteConfirmationModal(id) {
+  // Set the employee ID in a hidden input or data attribute
+  document.getElementById("deleteEmployeeId").value = id;
+  document.getElementById("targetEmployee").textContent = id;
+
+  // Show the delete confirmation modal
+  const deleteModal = new bootstrap.Modal(
+    document.getElementById("deleteConfirmationModal")
+  );
+  deleteModal.show();
+}
+
+// Function to handle the delete confirmation
+async function handleDeleteConfirmation() {
+  const id = document.getElementById("deleteEmployeeId").value;
+
+  // Call the deleteEmployee function
+  await deleteEmployee(id);
+
+  // Hide the delete confirmation modal
+  const deleteModal = bootstrap.Modal.getInstance(
+    document.getElementById("deleteConfirmationModal")
+  );
+  deleteModal.hide();
+}
+
+// Add event listener to the confirm delete button
+document
+  .getElementById("confirmDeleteButton")
+  .addEventListener("click", handleDeleteConfirmation);
+
+export { deleteEmployee, openDeleteConfirmationModal };
