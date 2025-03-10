@@ -1,7 +1,3 @@
-Here’s a revised version of your `README.md` file with improved structure, clarity, and formatting:
-
----
-
 # Employee Management System
 
 A simple **Employee Management System** built with **PHP**, **MySQL**, **Bootstrap**, and **JavaScript**. This system allows administrators to manage employee records, including adding, viewing, updating, and deleting employee details. It features a responsive design, pagination, and search functionality.
