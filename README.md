@@ -43,42 +43,12 @@ cd employee-management-system
 
    - Launch XAMPP and start the **Apache** and **MySQL** services.
 
-2. **Create a MySQL Database:**
+2. **Import the Database:**
 
+   - Locate the `employee_management` folder/database folder included in the project.
+   - Copy the folder or file and paste it into the `mysql/data` directory inside your XAMPP installation folder (e.g., `C:\xampp\mysql\data`).
    - Open your browser and go to `http://localhost/phpmyadmin`.
-   - Create a new database named `employee_management`:
-
-     ```sql
-     CREATE DATABASE employee_management;
-     ```
-
-3. **Create the `employees` Table:**
-
-   - Select the `employee_management` database and run the following SQL script to create the `employees` table:
-
-     ```sql
-     CREATE TABLE employees (
-         id INT AUTO_INCREMENT PRIMARY KEY,
-         name VARCHAR(100) NOT NULL,
-         email VARCHAR(100) NOT NULL,
-         position VARCHAR(100) NOT NULL,
-         salary DECIMAL(10, 2) NOT NULL,
-         date_joined DATE NOT NULL
-     );
-     ```
-
-4. **Insert Sample Data (Optional):**
-
-   - You can insert sample data using the following SQL script:
-
-     ```sql
-     INSERT INTO employees (name, email, position, salary, date_joined) VALUES
-     ('John Doe', 'john.doe@example.com', 'Software Engineer', 75000, '2023-01-15'),
-     ('Jane Smith', 'jane.smith@example.com', 'Product Manager', 90000, '2023-02-10'),
-     ('Alice Johnson', 'alice.johnson@example.com', 'Data Analyst', 65000, '2023-03-05'),
-     ('Bob Brown', 'bob.brown@example.com', 'DevOps Engineer', 80000, '2023-04-20'),
-     ('Charlie Davis', 'charlie.davis@example.com', 'Frontend Developer', 70000, '2023-05-12');
-     ```
+   - Select the `employee_management` database (it should appear automatically after pasting the folder).
 
 ---
 
@@ -144,14 +114,18 @@ employee-management-system/
 │   ├── css/              # Custom CSS files
 │   ├── js/               # JavaScript files
 │   │   ├── addEmployee.js
-│   │   ├── deleteEmployee.js
+│   │   ├── constants.js
+│   │   ├── deleteEmployees.js
+│   │   ├── fetchEmployees.js
 │   │   ├── functions.js
 │   │   ├── index.js
-│   │   ├── readEmployees.js
+│   │   ├── pagination.js
+│   │   ├── showAlert.js
 │   │   └── updateEmployees.js
 │   └── php/              # PHP backend files
 │       ├── api.php
 │       └── db.php
+├── employee_management/  # Database file or related folder
 ├── index.html            # Main HTML file
 └── README.md             # Project documentation
 ```
@@ -199,3 +173,7 @@ For questions or feedback, please contact:
 ---
 
 Enjoy using the **Employee Management System**! 😊
+
+---
+
+This version of the `README.md` reflects the updated file structure from the image and simplifies the database setup instructions. Let me know if you need further adjustments!
