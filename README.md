@@ -46,7 +46,7 @@ cd employee-management-system
 2. **Import the Database:**
 
    - Locate the `employee_management` folder/database folder included in the project.
-   - Copy the folder or file and paste it into the `mysql/data` directory inside your XAMPP installation folder (e.g., `C:\xampp\mysql\data`).
+   - cut/copy the folder and paste it into the `mysql/data` directory inside your XAMPP installation folder (e.g., `C:\xampp\mysql\data`).
    - Open your browser and go to `http://localhost/phpmyadmin`.
    - Select the `employee_management` database (it should appear automatically after pasting the folder).
 
@@ -153,16 +153,6 @@ employee-management-system/
    - Ensure the database credentials in `db.php` are correct.
    - Verify that the MySQL server is running in XAMPP.
 
-2. **API Errors:**
-
-   - Check the browser console for errors.
-   - Inspect the network requests in the browser’s developer tools to see the backend response.
-
-3. **Frontend Issues:**
-   - Ensure all JavaScript files are correctly linked in `index.html`.
-   - Check for errors in the browser console.
-
----
 
 ## Contact
 
@@ -173,7 +163,3 @@ For questions or feedback, please contact:
 ---
 
 Enjoy using the **Employee Management System**! 😊
-
----
-
-This version of the `README.md` reflects the updated file structure from the image and simplifies the database setup instructions. Let me know if you need further adjustments!
