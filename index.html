@@ -22,29 +22,34 @@
       <h1 class="text-center mb-4">Employee Management System</h1>
 
       <!-- Button to Add Employee and Search Bar -->
-      <div class="d-flex flex-wrap gap-3 mb-4">
-        <!-- Button to Add Employee -->
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#addEmployeeModal"
-        >
-          <i class="bi bi-plus-circle"></i> Add Employee
-        </button>
+      <div class="row g-2 align-items-bottom mb-3">
+        <!-- Add Employee Button -->
+        <div class="col-12 col-md-auto">
+          <button
+            type="button"
+            class="btn btn-primary btn-sm w-100"
+            data-bs-toggle="modal"
+            data-bs-target="#addEmployeeModal"
+          >
+            Add Employee
+          </button>
+        </div>
 
         <!-- Search Bar -->
-        <div class="input-group">
-          <input
-            type="text"
-            id="searchInput"
-            class="form-control"
-            placeholder="Search by name, email, or position..."
-            aria-label="Search"
-          />
-          <button id="searchButton" class="btn btn-primary">
-            <i class="bi bi-search"></i> Search
-          </button>
+        <div class="col-12 col-md d-flex">
+          <div class="search-wrapper w-100 position-relative">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search by name, email, or position..."
+              aria-label="Search"
+              class="w-100 p-2 rounded-md"
+            />
+            <i
+              id="searchButton"
+              class="bi bi-search fs-4 position-absolute top-0 end-0 translate-middle-x"
+            ></i>
+          </div>
         </div>
       </div>
 
@@ -56,24 +61,55 @@
         <p class="mt-2">Loading employees...</p>
       </div>
 
-      <!-- Table to Display Employees -->
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Email</th>
-              <th scope="col">Position</th>
-              <th scope="col">Salary</th>
-              <th scope="col">Date Joined</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="employeeTableBody">
-            <!-- Employee rows will be dynamically inserted here -->
-          </tbody>
-        </table>
+      <!-- Table and Pagination Container -->
+      <div class="table-container">
+        <!-- Table to Display Employees -->
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Position</th>
+                <th scope="col">Salary</th>
+                <th scope="col">Date Joined</th>
+                <th scope="col" class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="employeeTableBody">
+              <!-- Employee rows will be dynamically inserted here -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="d-flex align-items-center justify-content-between gap-2">
+          <span class="page-link">
+            Page <span id="currentPage">1</span> of
+            <span id="totalPages">1</span>
+          </span>
+
+          <nav id="pagination" aria-label="Page navigation">
+            <ul class="pagination m-0">
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="#"
+                  aria-label="Previous"
+                  id="prevButton"
+                >
+                  <span>Prev</span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next" id="nextButton">
+                  <span>Next</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
 
       <!-- Success Messages -->
@@ -88,13 +124,6 @@
       >
         Employee edited successfully!
       </div>
-
-      <!-- Pagination Controls -->
-      <nav id="pagination" class="mt-4 d-flex justify-content-center">
-        <ul class="pagination">
-          <!-- Pagination links will be dynamically inserted here -->
-        </ul>
-      </nav>
     </div>
 
     <!-- Add Employee Modal -->

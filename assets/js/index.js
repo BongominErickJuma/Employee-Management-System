@@ -53,9 +53,10 @@ async function renderEmployeeTable(page = 1, limit = 5, searchQuery = "") {
           <td>${employee.position}</td>
           <td>${employee.salary}</td>
           <td>${employee.date_joined}</td>
-          <td>
-            <button class="btn btn-sm btn-warning edit-btn" data-id="${employee.id}">Edit</button>
-            <button class="btn btn-sm btn-danger" onclick="deleteEmployee(${employee.id})">Delete</button>
+          <td class="text-end border">
+            <button class="btn btn-sm btn-warning edit-btn" data-id="${employee.id}"><i class="bi bi-pencil-square"></i></button>
+            <button class="btn btn-sm btn-danger" onclick="deleteEmployee(${employee.id})"><i class="bi bi-trash"></i>
+</button>
           </td>
         </tr>
       `;
@@ -86,36 +87,34 @@ async function renderEmployeeTable(page = 1, limit = 5, searchQuery = "") {
 // Function to render pagination controls with search functionality
 function renderPaginationControls(total, currentPage, limit, searchQuery = "") {
   const totalPages = Math.ceil(total / limit);
-  const paginationDiv = document.getElementById("pagination");
-  paginationDiv.innerHTML = "";
+
+  // Update the current page and total pages
+  document.getElementById("currentPage").textContent = currentPage;
+  document.getElementById("totalPages").textContent = totalPages;
 
   // Previous Button
+  const prevButton = document.getElementById("prevButton");
   if (currentPage > 1) {
-    const prevButton = document.createElement("button");
-    prevButton.className = "btn btn-primary me-2";
-    prevButton.textContent = "Previous";
-    prevButton.addEventListener("click", () => {
+    prevButton.parentElement.classList.remove("disabled");
+    prevButton.onclick = () => {
       renderEmployeeTable(currentPage - 1, limit, searchQuery);
-    });
-    paginationDiv.appendChild(prevButton);
+    };
+  } else {
+    prevButton.parentElement.classList.add("disabled");
+    prevButton.onclick = null;
   }
 
   // Next Button
+  const nextButton = document.getElementById("nextButton");
   if (currentPage < totalPages) {
-    const nextButton = document.createElement("button");
-    nextButton.className = "btn btn-primary";
-    nextButton.textContent = "Next";
-    nextButton.addEventListener("click", () => {
+    nextButton.parentElement.classList.remove("disabled");
+    nextButton.onclick = () => {
       renderEmployeeTable(currentPage + 1, limit, searchQuery);
-    });
-    paginationDiv.appendChild(nextButton);
+    };
+  } else {
+    nextButton.parentElement.classList.add("disabled");
+    nextButton.onclick = null;
   }
-
-  // Page Info
-  const pageInfo = document.createElement("span");
-  pageInfo.className = "ms-3";
-  pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
-  paginationDiv.appendChild(pageInfo);
 }
 
 // Function to handle search

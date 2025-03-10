@@ -4,6 +4,11 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.page-link:focus,
+.btn-close:focus {
+  outline: 0;
+  box-shadow: none;
+}
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -28,6 +33,9 @@ h1 {
   background-color: #2980b9;
 }
 
+.search-wrapper i {
+  cursor: pointer;
+}
 .table {
   background-color: white;
   border-radius: 8px;
@@ -53,7 +61,18 @@ h1 {
 .table tbody tr:hover {
   background-color: #f1f1f1;
 }
+/* Fixed height for the table container */
+.table-container {
+  height: 400px; /* Adjust this height as needed */
+  display: flex;
+  flex-direction: column;
+}
 
+/* Ensure the table takes up the remaining space and scrolls if needed */
+.table-responsive {
+  flex: 1;
+  overflow-y: auto; /* Add vertical scroll if content overflows */
+}
 .modal-content {
   border-radius: 8px;
   border: none;
