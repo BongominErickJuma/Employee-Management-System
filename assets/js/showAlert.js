@@ -27,7 +27,7 @@ function showAlert(message, type = "success") {
     alertEl.classList.add("fade");
     setTimeout(() => {
       alertEl.remove();
-    }, 150); // Wait for the fade-out animation to complete
+    }, 150); 
   }, 3000);
 }
 
