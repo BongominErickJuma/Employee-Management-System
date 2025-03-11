@@ -70,8 +70,8 @@ function validateForm() {
     );
     isValid = false;
   }
-
-  return isValid; // Return true if the form is valid
+// Return true if the form is valid
+  return isValid; 
 }
 
 // Event listeners to reset field styles when the user starts typing
