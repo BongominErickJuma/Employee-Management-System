@@ -4,11 +4,11 @@ import { validateForm } from "./functions.js";
 import showAlert from "./showAlert.js";
 // Function to add a new employee
 async function addEmployee(event) {
-  event.preventDefault(); // Prevent form submission
+  event.preventDefault(); 
 
   // Validate the form
   if (!validateForm()) {
-    return; // Stop if validation fails
+    return;
   }
 
   // Get form values
@@ -45,7 +45,7 @@ async function addEmployee(event) {
 
     // Refresh the table to show the new employee
     await renderEmployeeTable();
-    // Show success toast
+    // Show success alert
     showAlert("Employee added successfully!", "success");
 
     // Close the modal
