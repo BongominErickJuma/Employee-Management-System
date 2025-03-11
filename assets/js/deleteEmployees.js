@@ -5,7 +5,7 @@ import showAlert from "./showAlert.js";
 // Function to delete an employee
 async function deleteEmployee(id) {
   try {
-    // Send a request to delete the employee
+  
     const response = await fetch(`${apiUrl}?id=${id}`, {
       method: "DELETE",
     });
@@ -18,7 +18,7 @@ async function deleteEmployee(id) {
     // Refresh the table to reflect the deletion
     await renderEmployeeTable();
 
-    // Show success toast
+    // Show success alert
     showAlert("Employee deleted successfully!", "success");
   } catch (error) {
     console.error("Error deleting employee:", error);
@@ -28,7 +28,7 @@ async function deleteEmployee(id) {
 
 // Function to open the delete confirmation modal
 function openDeleteConfirmationModal(id) {
-  // Set the employee ID in a hidden input or data attribute
+ 
   document.getElementById("deleteEmployeeId").value = id;
   document.getElementById("targetEmployee").textContent = id;
 
@@ -43,7 +43,6 @@ function openDeleteConfirmationModal(id) {
 async function handleDeleteConfirmation() {
   const id = document.getElementById("deleteEmployeeId").value;
 
-  // Call the deleteEmployee function
   await deleteEmployee(id);
 
   // Hide the delete confirmation modal
