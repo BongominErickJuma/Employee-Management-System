@@ -5,9 +5,9 @@ include('db.php');
 try {
     // Fetch all employees with pagination and search
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        // Sanitize and validate GET parameters
-        $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1; // Ensure page is at least 1
-        $limit = isset($_GET['limit']) ? max(1, (int)$_GET['limit']) : 5; // Ensure limit is at least 1
+       
+        $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1; 
+        $limit = isset($_GET['limit']) ? max(1, (int)$_GET['limit']) : 5; 
         $searchQuery = isset($_GET['search']) ? htmlspecialchars($_GET['search'], ENT_QUOTES, 'UTF-8') : ''; // Sanitize search query
 
         $offset = ($page - 1) * $limit; // Calculate the offset
@@ -56,20 +56,20 @@ try {
 
         // Validate and sanitize input data
         if (empty($data['name']) || empty($data['email']) || empty($data['position']) || empty($data['salary']) || empty($data['dateJoined'])) {
-            http_response_code(400); // Bad Request
+            http_response_code(400);
             echo json_encode(['error' => 'All fields are required.']);
             exit;
         }
 
         $data['email'] = filter_var($data['email'], FILTER_SANITIZE_EMAIL);
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            http_response_code(400); // Bad Request
+            http_response_code(400); 
             echo json_encode(['error' => 'Invalid email format.']);
             exit;
         }
 
         if (!is_numeric($data['salary']) || $data['salary'] <= 0) {
-            http_response_code(400); // Bad Request
+            http_response_code(400); 
             echo json_encode(['error' => 'Salary must be a positive number.']);
             exit;
         }
@@ -78,7 +78,7 @@ try {
         $stmt = $conn->prepare("SELECT id FROM employees WHERE LOWER(email) = LOWER(:email)");
         $stmt->execute([':email' => $data['email']]);
         if ($stmt->fetch()) {
-            http_response_code(400); // Bad Request
+            http_response_code(400); 
             echo json_encode(['error' => 'Email already exists.']);
             exit;
         }
@@ -106,20 +106,20 @@ try {
 
         // Validate and sanitize input data
         if (empty($data['name']) || empty($data['email']) || empty($data['position']) || empty($data['salary']) || empty($data['dateJoined'])) {
-            http_response_code(400); // Bad Request
+            http_response_code(400); 
             echo json_encode(['error' => 'All fields are required.']);
             exit;
         }
 
         $data['email'] = filter_var($data['email'], FILTER_SANITIZE_EMAIL);
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            http_response_code(400); // Bad Request
+            http_response_code(400); 
             echo json_encode(['error' => 'Invalid email format.']);
             exit;
         }
 
         if (!is_numeric($data['salary']) || $data['salary'] <= 0) {
-            http_response_code(400); // Bad Request
+            http_response_code(400); 
             echo json_encode(['error' => 'Salary must be a positive number.']);
             exit;
         }
@@ -128,7 +128,7 @@ try {
         $stmt = $conn->prepare("SELECT id FROM employees WHERE LOWER(email) = LOWER(:email) AND id != :id");
         $stmt->execute([':email' => $data['email'], ':id' => $data['id']]);
         if ($stmt->fetch()) {
-            http_response_code(400); // Bad Request
+            http_response_code(400); 
             echo json_encode(['error' => 'Email already exists.']);
             exit;
         }
@@ -162,7 +162,7 @@ try {
         $stmt = $conn->prepare("SELECT id FROM employees WHERE id = :id");
         $stmt->execute([':id' => $id]);
         if (!$stmt->fetch()) {
-            http_response_code(404); // Not Found
+            http_response_code(404); 
             echo json_encode(['error' => 'Employee not found.']);
             exit;
         }
@@ -175,12 +175,12 @@ try {
     }
 } catch (PDOException $e) {
     // Handle database errors
-    http_response_code(500); // Internal Server Error
+    http_response_code(500); 
     echo json_encode(['error' => 'Database error.']);
     exit;
 } catch (Exception $e) {
     // Handle other errors
-    http_response_code(500); // Internal Server Error
+    http_response_code(500); 
     echo json_encode(['error' => 'An error occurred.']);
     exit;
 }
