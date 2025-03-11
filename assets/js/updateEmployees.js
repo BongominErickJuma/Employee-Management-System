@@ -67,7 +67,7 @@ async function handleEditFormSubmit(event) {
 
     // Refresh the table to show the updated data
     await renderEmployeeTable();
-    // Show success toast
+    // Show success alert
     showAlert("Employee updated successfully!", "success");
 
     // Close the modal
