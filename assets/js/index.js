@@ -2,6 +2,7 @@ import handleEditButtonClick from "./updateEmployees.js";
 import { openDeleteConfirmationModal } from "./deleteEmployees.js";
 import renderPaginationControls from "./pagination.js";
 import { apiUrl } from "./constants.js";
+
 // Function to render the employee table with search functionality
 async function renderEmployeeTable(page = 1, limit = 5, searchQuery = "") {
   const loadingSpinner = document.getElementById("loadingSpinner");
@@ -87,10 +88,14 @@ async function renderEmployeeTable(page = 1, limit = 5, searchQuery = "") {
     tableBody.removeAttribute("hidden"); // Fade in the table
   }
 }
+
 // Function to handle search
 async function handleSearch() {
   const searchQuery = document.getElementById("searchInput").value.trim();
+
+  // If the search term is empty, reset the table to the initial state
   if (!searchQuery) {
+    await renderEmployeeTable();
     return;
   }
 
@@ -100,6 +105,13 @@ async function handleSearch() {
 
 // Add event listener to the search button
 document.getElementById("searchButton").addEventListener("click", handleSearch);
+
+// Add event listener for "Enter" key press in the search input field
+document.getElementById("searchInput").addEventListener("keypress", (event) => {
+  if (event.key === "Enter") {
+    handleSearch();
+  }
+});
 
 // Initial render of the table (default to page 1)
 renderEmployeeTable();
