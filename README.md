@@ -39,6 +39,8 @@ cd Employee-Management-System
 
 ### 2. Set Up the Database
 
+#### Method 1: Import the SQL File (Recommended)
+
 1. **Start XAMPP:**
 
    - Launch XAMPP and start the **Apache** and **MySQL** services.
@@ -50,6 +52,27 @@ cd Employee-Management-System
    - Once the database is created, click on the **Import** tab at the top of the page.
    - Click **Choose File** and select the `employees.sql` file from your project directory.
    - Click **Import** to import the SQL file and set up the database structure and sample data.
+
+#### Method 2: Copy Database Folder (Alternative)
+
+If importing the SQL file fails, you can manually copy the database folder:
+
+1. **Locate the `employee_management` Folder:**
+
+   - Inside the project directory, there is a folder named `employee_management`.
+
+2. **Copy the Folder:**
+
+   - Copy the `employee_management` folder.
+
+3. **Paste the Folder into XAMPP MySQL Data Directory:**
+
+   - Navigate to `C:\xampp\mysql\data\` (or the MySQL data directory in your XAMPP installation).
+   - Paste the `employee_management` folder inside `data`.
+
+4. **Restart MySQL:**
+   - Open XAMPP Control Panel and restart the MySQL service.
+   - The database should now be recognized and ready for use.
 
 ---
 
@@ -131,8 +154,11 @@ Employee-Management-System/
 │   └── php/              # PHP backend files
 │       ├── api.php
 │       └── db.php
-├── index.html            # Main HTML file
-└── README.md             # Project documentation
+├── employee_management/   # Folder for database
+├── employees.sql          # SQL file
+├── index.html             # Main HTML file
+├── login.html             # Login HTML file
+└── README.md              # Project documentation
 ```
 
 ---
