@@ -86,6 +86,11 @@ cd Employee-Management-System
      http://localhost/Employee-Management-System
      ```
 
+3. **Login Credentials:**
+   - Use the following credentials to log in to the system:
+     - **Email:** admin@gmail.com
+     - **Password:** password
+
 ---
 
 ### 5. Using the Application
