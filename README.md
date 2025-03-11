@@ -1,6 +1,6 @@
 # Employee Management System
 
-A simple **Employee Management System** built with **PHP**, **MySQL**, **Bootstrap**, and **JavaScript**. This system allows administrators to manage employee records, including adding, viewing, updating, and deleting employee details. It features a responsive design, pagination, and search functionality.
+A simple **Employee Management System** built with **PHP**, **MySQL**, **Bootstrap**, **HTML**, and **JavaScript**. This system allows administrators to manage employee records, including adding, viewing, updating, and deleting employee details. It features a responsive design, pagination, and search functionality.
 
 ---
 
@@ -40,6 +40,7 @@ cd Employee-Management-System
 ### 2. Set Up the Database
 
 1. **Start XAMPP:**
+
    - Launch XAMPP and start the **Apache** and **MySQL** services.
 
 2. **Import the SQL File:**
@@ -55,6 +56,7 @@ cd Employee-Management-System
 ### 3. Configure the Backend
 
 1. **Update Database Credentials:**
+
    - Open the `db.php` file in the `assets/php` directory.
    - Update the database connection details with your MySQL credentials (default XAMPP credentials are used below):
 
@@ -73,9 +75,11 @@ cd Employee-Management-System
 ### 4. Access the Application
 
 1. **Start XAMPP:**
+
    - Ensure the **Apache** and **MySQL** services are running in XAMPP.
 
 2. **Open the Application:**
+
    - Open your browser and navigate to:
 
      ```
@@ -87,12 +91,15 @@ cd Employee-Management-System
 ### 5. Using the Application
 
 1. **Add Employees:**
+
    - Click the "Add Employee" button to open the modal and fill in the employee details.
 
 2. **View Employees:**
+
    - The employee table will display all employees. Use the pagination controls to navigate between pages.
 
 3. **Search Employees:**
+
    - Use the search bar to filter employees by name, email, or position.
 
 4. **Edit or Delete Employees:**
@@ -119,7 +126,6 @@ Employee-Management-System/
 │   └── php/              # PHP backend files
 │       ├── api.php
 │       └── db.php
-├── employee_management.sql  # SQL file for database import
 ├── index.html            # Main HTML file
 └── README.md             # Project documentation
 ```
@@ -143,6 +149,7 @@ Employee-Management-System/
 ## Troubleshooting
 
 1. **Database Connection Issues:**
+
    - Ensure the database credentials in `db.php` are correct.
    - Verify that the MySQL server is running in XAMPP.
 
