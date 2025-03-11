@@ -48,8 +48,8 @@ cd Employee-Management-System
    - Click on **New** to create a new database.
    - Name the database `employee_management` and click **Create**.
    - Once the database is created, click on the **Import** tab at the top of the page.
-   - Click **Choose File** and select the `employee_management.sql` file from your project directory.
-   - Click **Go** to import the SQL file and set up the database structure and sample data.
+   - Click **Choose File** and select the `employees.sql` file from your project directory.
+   - Click **Import** to import the SQL file and set up the database structure and sample data.
 
 ---
 
