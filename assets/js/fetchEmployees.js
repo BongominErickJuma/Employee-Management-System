@@ -4,7 +4,7 @@ import { apiUrl } from "./constants.js";
 async function fetchAllEmployees() {
   let allEmployees = [];
   let page = 1;
-  let limit = 5; // Default limit, should match the backend
+  let limit = 5; 
   let total = 0;
 
   try {
@@ -19,10 +19,10 @@ async function fetchAllEmployees() {
       page++;
     } while (allEmployees.length < total);
 
-    return allEmployees; // Return the fetched employees
+    return allEmployees; 
   } catch (error) {
     console.error("Error fetching employees:", error);
-    return []; // Return an empty array in case of error
+    return []; 
   }
 }
 
